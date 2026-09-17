@@ -1,0 +1,17 @@
+Metadata-Version: 2.4
+Name: jaljasoos-edge
+Version: 0.1.0
+Summary: JalJasoos Edge Gateway — local MQTT ingestion, AI inference, and cloud sync
+Requires-Python: >=3.10
+Requires-Dist: fastapi>=0.111.0
+Requires-Dist: uvicorn[standard]>=0.30.0
+Requires-Dist: sqlalchemy>=2.0.0
+Requires-Dist: psycopg2-binary>=2.9.9
+Requires-Dist: pydantic>=2.7.0
+Requires-Dist: pydantic-settings>=2.3.0
+Requires-Dist: paho-mqtt>=2.0.0
+Requires-Dist: websockets>=12.0
+Requires-Dist: httpx>=0.27.0
+Requires-Dist: structlog>=24.1.0
+Requires-Dist: python-dotenv>=1.0.0
+Requires-Dist: jaljasoos-mqtt-contracts

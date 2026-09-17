@@ -1,0 +1,138 @@
+services:
+  # ----------------------------------------------------------------------------
+  # CORE INFRASTRUCTURE: CLOUD
+  # ----------------------------------------------------------------------------
+  postgres-cloud:
+    image: postgres:15-alpine
+    container_name: jaljasoos_postgres_cloud
+    environment:
+      POSTGRES_USER: jaljasoos
+      POSTGRES_PASSWORD: jaljasoos_pass
+      POSTGRES_DB: jaljasoos_cloud
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_cloud_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U jaljasoos -d jaljasoos_cloud"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # ----------------------------------------------------------------------------
+  # CORE INFRASTRUCTURE: EDGE
+  # ----------------------------------------------------------------------------
+  postgres-edge:
+    image: postgres:15-alpine
+    container_name: jaljasoos_postgres_edge
+    environment:
+      POSTGRES_USER: jaljasoos
+      POSTGRES_PASSWORD: jaljasoos_pass
+      POSTGRES_DB: jaljasoos_edge
+    ports:
+      - "5433:5432" # Map to 5433 locally to avoid clash with cloud DB
+    volumes:
+      - postgres_edge_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U jaljasoos -d jaljasoos_edge"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  mosquitto:
+    image: eclipse-mosquitto:2
+    container_name: jaljasoos_mosquitto
+    ports:
+      - "1883:1883"
+      - "9001:9001"
+    volumes:
+      - ./infrastructure/mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf
+      - mosquitto_data:/mosquitto/data
+      - mosquitto_log:/mosquitto/log
+
+  # ----------------------------------------------------------------------------
+  # APPLICATIONS (Phase 2+)
+  # ----------------------------------------------------------------------------
+  # api:
+  #   build: ./apps/api
+  #   depends_on:
+  #     postgres-cloud:
+  #       condition: service_healthy
+  #   env_file: .env
+  api:
+    build: ./apps/api
+    container_name: jaljasoos_api
+    ports:
+      - "8000:8000"
+    depends_on:
+      postgres-cloud:
+        condition: service_healthy
+      mosquitto:
+        condition: service_started
+    env_file: .env
+    environment:
+      - DATABASE_URL=postgresql://jaljasoos:jaljasoos_pass@postgres-cloud:5432/jaljasoos_cloud
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  edge-gateway:
+    build: ./apps/edge-gateway
+    container_name: jaljasoos_edge_gateway
+    ports:
+      - "8080:8080"
+    depends_on:
+      postgres-edge:
+        condition: service_healthy
+      mosquitto:
+        condition: service_started
+    env_file: .env
+    environment:
+      - EDGE_DATABASE_URL=postgresql://jaljasoos:jaljasoos_pass@postgres-edge:5432/jaljasoos_edge
+      - MQTT_BROKER_HOST=mosquitto
+      - CLOUD_API_URL=http://api:8000
+      - CLOUD_WS_URL=ws://api:8000
+      - PYTHONPATH=/app:/app/packages/mqtt-contracts
+    volumes:
+      - ./packages/mqtt-contracts:/app/packages/mqtt-contracts
+    # In a real dev setup, we'd bind mount the packages folder properly.
+
+  web:
+    build: ./apps/web
+    container_name: jaljasoos_web
+    ports:
+      - "3000:3000"
+    depends_on:
+      api:
+        condition: service_started
+    environment:
+      - NEXT_PUBLIC_API_URL=http://localhost:8000
+    # In a real setup, we might map a volume for live reload, but this builds it for prod
+
+  # simulator (uncomment to run; set SIM_SCENARIO to: normal, leak, pump_startup, sensor_failure, node_offline)
+  simulator:
+    build: ./apps/simulator
+    container_name: jaljasoos_simulator
+    depends_on:
+      mosquitto:
+        condition: service_started
+    env_file: .env
+    environment:
+      - MQTT_BROKER_HOST=mosquitto
+      - MQTT_BROKER_PORT=1883
+      - SIM_SOCIETY_ID=society01
+      - SIM_BUILDING_ID=buildingA
+      - SIM_SCENARIO=normal
+      - SIM_TELEMETRY_INTERVAL=2.0
+      - SIM_HEALTH_INTERVAL=30.0
+      - SIM_SCENARIO_DURATION=0
+    profiles:
+      - simulator  # Run with: docker compose --profile simulator up
+
+volumes:
+  postgres_cloud_data:
+  postgres_edge_data:
+  mosquitto_data:
+  mosquitto_log:

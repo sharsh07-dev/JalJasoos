@@ -1,0 +1,15 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Gateway → ESP32 Command",
+  "type": "object",
+  "required": ["command_id", "action", "timestamp", "issuer"],
+  "properties": {
+    "command_id": { "type": "string", "format": "uuid" },
+    "action": { "type": "string", "enum": ["OPEN", "CLOSE", "STOP", "PARTIAL"] },
+    "timestamp": { "type": "string", "format": "date-time" },
+    "issuer": { "type": "string", "enum": ["EDGE_GATEWAY", "CLOUD_MANUAL", "SYSTEM"] },
+    "partial_percent": { "type": "number", "minimum": 0, "maximum": 100 },
+    "timeout_ms": { "type": "integer", "minimum": 500, "maximum": 30000 }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,23 @@
+[project]
+name = "jaljasoos-edge"
+version = "0.1.0"
+description = "JalJasoos Edge Gateway — local MQTT ingestion, AI inference, and cloud sync"
+requires-python = ">=3.10"
+dependencies = [
+    "fastapi>=0.111.0",
+    "uvicorn[standard]>=0.30.0",
+    "sqlalchemy>=2.0.0",
+    "psycopg2-binary>=2.9.9",
+    "pydantic>=2.7.0",
+    "pydantic-settings>=2.3.0",
+    "paho-mqtt>=2.0.0",
+    "websockets>=12.0",
+    "httpx>=0.27.0",
+    "structlog>=24.1.0",
+    "python-dotenv>=1.0.0",
+    "jaljasoos-mqtt-contracts",
+]
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"

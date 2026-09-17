@@ -1,0 +1,19 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "JalJasoos ESP32 Telemetry Payload",
+  "type": "object",
+  "required": ["node_id", "timestamp", "flow_lpm", "pressure_bar"],
+  "properties": {
+    "node_id": { "type": "string", "pattern": "^NODE-[A-Z0-9]+-[0-9]+$" },
+    "timestamp": { "type": "string", "format": "date-time" },
+    "flow_lpm": { "type": "number", "minimum": 0, "maximum": 200 },
+    "pressure_bar": { "type": "number", "minimum": 0, "maximum": 20 },
+    "acoustic_rms": { "type": "number", "minimum": 0 },
+    "pump_state": { "type": "boolean" },
+    "tank_level_percent": { "type": "number", "minimum": 0, "maximum": 100 },
+    "motor_current_a": { "type": "number", "minimum": 0 },
+    "battery_percent": { "type": "integer", "minimum": 0, "maximum": 100 },
+    "signal_rssi": { "type": "integer", "minimum": -120, "maximum": 0 }
+  },
+  "additionalProperties": false
+}

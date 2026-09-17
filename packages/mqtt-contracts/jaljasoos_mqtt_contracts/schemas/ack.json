@@ -1,0 +1,18 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ESP32 → Gateway Command Acknowledgement",
+  "type": "object",
+  "required": ["command_id", "node_id", "valve_status", "timestamp"],
+  "properties": {
+    "command_id": { "type": "string", "format": "uuid" },
+    "node_id": { "type": "string" },
+    "valve_status": {
+      "type": "string",
+      "enum": ["OPENING", "OPEN", "CLOSING", "CLOSED", "FAULT", "UNKNOWN"]
+    },
+    "timestamp": { "type": "string", "format": "date-time" },
+    "actuation_time_ms": { "type": "integer", "minimum": 0 },
+    "error": { "type": "string" }
+  },
+  "additionalProperties": false
+}

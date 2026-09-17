@@ -1,0 +1,13 @@
+pyproject.toml
+app/ai.py
+app/cloud.py
+app/config.py
+app/database.py
+app/main.py
+app/models.py
+app/mqtt_worker.py
+jaljasoos_edge.egg-info/PKG-INFO
+jaljasoos_edge.egg-info/SOURCES.txt
+jaljasoos_edge.egg-info/dependency_links.txt
+jaljasoos_edge.egg-info/requires.txt
+jaljasoos_edge.egg-info/top_level.txt

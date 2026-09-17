@@ -1,0 +1,15 @@
+[project]
+name = "jaljasoos-simulator"
+version = "0.1.0"
+description = "JalJasoos ESP32 Simulator — generates realistic MQTT telemetry for development"
+requires-python = ">=3.10"
+dependencies = [
+    "paho-mqtt>=2.0.0",
+    "python-dotenv>=1.0.0",
+    "structlog>=24.1.0",
+    "click>=8.1.0",
+]
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
