@@ -391,8 +391,6 @@ Deploying the JalJasoos web dashboard to Vercel takes less than two minutes:
 
 Distributed under the **MIT License**. See `LICENSE` for more information.
 
-- **Team:** JalJasoos Engineering Team — *Smart India Hackathon 2026*
-
 <div align="center">
   <sub>Built with clean code, physical constraints, and human-centric design.</sub>
 </div>
