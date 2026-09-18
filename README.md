@@ -387,28 +387,6 @@ Deploying the JalJasoos web dashboard to Vercel takes less than two minutes:
 
 ---
 
-## 🏆 Presentation Demo Script (For Pitching & Judges)
-
-Follow this 4-step sequence during your project demonstration:
-
-1. **Step 1: Super Admin Console (`SUPER_ADMIN`)**
-   - Showcase cross-society health, ESP32 device registry, and PINN model weights.
-   - Click on **"Simplicity Society"** in the fleet list to drill down into the local facility.
-2. **Step 2: Facility Manager (`FACILITY_MANAGER`)**
-   - Show live baseline telemetry (Pressure: 2.8 bar, Acoustic: 0.12 RMS).
-   - Scroll down to **Manual Controls** and click **Inject Physical Leak**.
-   - Observe immediate pressure drop to 1.8 bar, acoustic surge to 0.48 RMS, and auto-engagement of the isolation valve.
-3. **Step 3: Resident Portal (`RESIDENT`)**
-   - Log out and switch to **Resident**.
-   - Point out that the engineering complexity is hidden, but a bold **"⚠️ Possible Water Leak"** alert banner is immediately visible for apartment A-304.
-4. **Step 4: Maintenance Action Screen (`MAINTENANCE_STAFF`)**
-   - Switch to **Maintenance Staff**.
-   - Demonstrate the task card, expand the **Indoor SVG Navigation Map**, and click **Start Repair**.
-   - Upload a repair photo (watch the client-side canvas compression preserve browser memory).
-   - Click **Verify Repair** to run the 3-step diagnostic check and restore the system to **🟢 REPAIR VERIFIED**.
-
----
-
 ## 📄 License & Authors
 
 Distributed under the **MIT License**. See `LICENSE` for more information.
