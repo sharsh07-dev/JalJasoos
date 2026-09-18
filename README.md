@@ -32,7 +32,7 @@
   - [Method 3: Full Docker Compose Environment](#method-3-full-docker-compose-environment)
 - [Repository Monorepo Layout](#-repository-monorepo-layout)
 - [Vercel Deployment Guide](#-vercel-deployment-guide)
-- [License & Authors](#-license--authors)
+- [License](#-license)
 
 ---
 
@@ -387,11 +387,10 @@ Deploying the JalJasoos web dashboard to Vercel takes less than two minutes:
 
 ---
 
-## 📄 License & Authors
+## 📄 License
 
 Distributed under the **MIT License**. See `LICENSE` for more information.
 
-- **Project Lead & Developer:** Harsh Shinde ([@sharsh07-dev](https://github.com/sharsh07-dev))
 - **Team:** JalJasoos Engineering Team — *Smart India Hackathon 2026*
 
 <div align="center">
